@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>POLAR AUDIO SOLUTION'S - MEMBER CARD B2C</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #000000;
+      --gray-dark: #384e6a;
+      --gray-medium: #464f60;
+      --orange: #fb6000;
+      --white: #ffffff;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      transition: background 1s ease, color 0.5s ease;
+      overflow-x: hidden;
+    }
+    body.dark {
+      background: linear-gradient(-45deg, var(--black), var(--gray-dark), var(--black), var(--gray-dark));
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      color: var(--white);
+    }
+    body.light {
+      background: #f4f5f7;
+      color: #222222;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .toggle-mode {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1000;
+      color: var(--orange);
+      background: rgba(0,0,0,0.2);
+      padding: 6px 8px;
+      border-radius: 8px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .toggle-mode:hover {
+      background: rgba(0,0,0,0.4);
+    }
+    .toggle-mode svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      color: var(--orange);
+      text-shadow: 1px 1px 2px var(--black);
+      font-weight: 700;
+    }
+    body.light header h1 {
+      color: var(--orange);
+      text-shadow: none;
+    }
+    header h2 {
+      font-size: 1.2rem;
+      color: var(--gray-medium);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    body.light header h2 {
+      color: #555555;
+    }
+    .main-text {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      padding: 1rem 2rem;
+      background: rgba(70, 79, 96, 0.4); /* semi-transparent grey */
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--white);
+      user-select: none;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+    body.light .main-text {
+      background: rgba(200, 200, 210, 0.3);
+      color: #222222;
+    }
+    .card-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .card {
+      width: 320px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+      user-select: none;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.9);
+    }
+    body.light .card {
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    body.light .card:hover {
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .card-text {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      background: rgba(70, 79, 96, 0.4);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--white);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.4;
+      user-select: none;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+    body.light .card-text {
+      background: rgba(220, 220, 230, 0.3);
+      color: #222222;
+    }
+    .card-text strong {
+      font-weight: 700;
+      display: block;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: var(--orange);
+    }
+    body.light .card-text strong {
+      color: var(--orange);
+    }
+    .contact {
+      margin: 3rem 0 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+    .contact a img {
+      filter: brightness(1) saturate(1);
+      transition: filter 0.3s ease;
+    }
+    .contact a:hover img {
+      filter: brightness(0.8) saturate(1.5);
+    }
+    /* Zoom Overlay */
+    .zoom-wrapper {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .zoom-card {
+      position: relative;
+    }
+    .zoom-card img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      user-select: none;
+      transition: filter 0.3s ease;
+    }
+    .zoom-controls {
+      position: absolute;
+      top: -50px;
+      right: -10px;
+      display: flex;
+      gap: 12px;
+      user-select: none;
+    }
+    .zoom-controls svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 2.5;
+      cursor: pointer;
+      transition: stroke 0.3s ease;
+    }
+    .zoom-controls svg:hover {
+      stroke: var(--orange);
+    }
+    body.light .zoom-controls svg,
+    body.light .zoom-card img {
+      filter: none;
+      stroke: var(--orange);
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="toggle-mode" onclick="toggleMode()" title="Toggle Light/Dark Mode" role="button" tabindex="0" onkeypress="if(event.key==='Enter') toggleMode()">
+    <!-- Light/Dark Switch Icon -->
+    <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" >
+      <path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 1 0-18Z"/>
+    </svg>
+  </div>
+
+  <header>
+    <h1>MEMBER CARD</h1>
+    <h2>B2C</h2>
+  </header>
+
+  <div class="main-text">
+    <p>This card is your key to every event that matters to you.</p>
+    <p>Whether you’re a freelancer crafting your own journey, a loyal client who supports our vision, <br>
+    or someone passionate about the experiences we create — this Member Card opens and unique opportunities.</p>
+  </div>
+
+  <div class="card-section">
+    <img src="https://raw.githubusercontent.com/PolarAudio/website/main/5-min.jpg" alt="Member Card Front" class="card" id="card" onclick="zoomCard()" />
+    <img src="https://raw.githubusercontent.com/PolarAudio/website/main/6-min.jpg" alt="Member Card Back" class="card" id="cardBack" onclick="zoomCardBack()" style="display:none;" />
+  </div>
+
+  <div class="card-text">
+    <strong>Member card individuals who collaborate, recommend, and grow with us quietly, consistently, and with purpose.</strong>
+    <p>Step in, expand your network, and own the moments that push you forward.</p>
+  </div>
+
+  <div class="contact">
+    <a href="https://instagram.com/polar_solution" target="_blank" rel="noopener noreferrer" title="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" width="24" alt="Instagram" />
+    </a>
+    <a href="mailto:info@polarsolutionsbali.com" target="_blank" rel="noopener noreferrer" title="Email">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" width="24" alt="Email" />
+    </a>
+    <a href="https://www.polarsolutionsbali.com/id" target="_blank" rel="noopener noreferrer" title="Website">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlechrome.svg" width="24" alt="Website" />
+    </a>
+    <a href="https://wa.me/6281237858515" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" width="24" alt="WhatsApp" />
+    </a>
+    <a href="https://maps.app.goo.gl/zbiZ6tRfQ24ucFsZ7" target="_blank" rel="noopener noreferrer" title="Google Maps">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlemaps.svg" width="24" alt="Google Maps" />
+    </a>
+    <a href="https://facebook.com/polaraudiosolution" target="_blank" rel="noopener noreferrer" title="Facebook">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" width="24" alt="Facebook" />
+    </a>
+  </div>
+
+  <!-- Zoom overlay -->
+  <div class="zoom-wrapper" id="zoomWrapper">
+    <div class="zoom-card">
+      <div class="zoom-controls">
+        <svg viewBox="0 0 24 24" onclick="flipCard()" title="Flip Card" role="button" tabindex="0" onkeypress="if(event.key==='Enter') flipCard()"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+        <svg viewBox="0 0 24 24" onclick="closeZoom()" title="Close Zoom" role="button" tabindex="0" onkeypress="if(event.key==='Enter') closeZoom()"><path d="M6 18L18 6M6 6l12 12"/></svg>
+      </div>
+      <img id="zoomImg" src="https://raw.githubusercontent.com/PolarAudio/website/main/5-min.jpg" alt="Zoomed Member Card" />
+    </div>
+  </div>
+
+  <script>
+    let isFront = true;
+    function zoomCard() {
+      document.getElementById('zoomWrapper').style.display = 'flex';
+      document.getElementById('zoomImg').src = 'https://raw.githubusercontent.com/PolarAudio/website/main/5-min.jpg';
+      isFront = true;
+    }
+    function zoomCardBack() {
+      document.getElementById('zoomWrapper').style.display = 'flex';
+      document.getElementById('zoomImg').src = 'https://raw.githubusercontent.com/PolarAudio/website/main/6-min.jpg';
+      isFront = false;
+    }
+    function flipCard() {
+      const zoomImg = document.getElementById('zoomImg');
+      if (isFront) {
+        zoomImg.src = 'https://raw.githubusercontent.com/PolarAudio/website/main/6-min.jpg';
+      } else {
+        zoomImg.src = 'https://raw.githubusercontent.com/PolarAudio/website/main/5-min.jpg';
+      }
+      isFront = !isFront;
+    }
+    function closeZoom() {
+      document.getElementById('zoomWrapper').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
